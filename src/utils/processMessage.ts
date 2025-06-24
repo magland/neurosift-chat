@@ -21,17 +21,7 @@ const getJobRunner = () => {
   return jobRunnerClient;
 };
 
-const openRouterKey =
-  "sk" +
-  "-" +
-  "or" +
-  "-" +
-  "v1" +
-  "-" +
-  "db" +
-  "54" +
-  "3e" +
-  "9baa563e4ba92097b94d1a3140f1e7fba6e64c21f8ee97424b4674df36";
+const openRouterKey = ''; // in future store in browser
 
 export async function processMessage(
   query: string,

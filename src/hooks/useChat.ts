@@ -12,6 +12,7 @@ import {
   saveChat,
   loadChat
 } from "../utils/chatManager";
+import { useUsage } from "../contexts/UsageContext";
 
 const defaultModel = "openai/gpt-4.1-mini";
 
@@ -40,6 +41,7 @@ export function useChat() {
     cost: 0,
   });
 
+  const { refreshUsage } = useUsage();
   const initialized = useRef(false);
 
   // Initialize chat when component mounts
@@ -168,6 +170,9 @@ export function useChat() {
         })),
       ]);
       setMainQuery("");
+
+      // Refresh usage data after successful completion
+      refreshUsage();
     } finally {
       setStatus("");
       setIsLoading(false);

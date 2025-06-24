@@ -3,13 +3,15 @@ interface SearchFormProps {
   onQueryChange: (value: string) => void
   onSubmit: (e: React.FormEvent) => void
   isLoading: boolean
+  disabled?: boolean
 }
 
 export function SearchForm({
   query,
   onQueryChange,
   onSubmit,
-  isLoading
+  isLoading,
+  disabled = false
 }: SearchFormProps) {
   return (
     <form onSubmit={onSubmit} className="search-form">
@@ -19,8 +21,9 @@ export function SearchForm({
         onChange={(e) => onQueryChange(e.target.value)}
         placeholder="Query DANDI and OpenNeuro..."
         className="search-input"
+        disabled={disabled}
       />
-      <button type="submit" className="search-button" disabled={isLoading}>
+      <button type="submit" className="search-button" disabled={isLoading || disabled}>
         Submit
       </button>
     </form>
