@@ -1,12 +1,14 @@
 import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { ChatMessages } from './components/ChatMessages'
 import { SearchForm } from './components/SearchForm'
 import { SuggestedQueries } from './components/SuggestedQueries'
 import { ModelSelect } from './components/ModelSelect'
+import { AdminPage } from './components/AdminPage'
 import { useChat } from './hooks/useChat'
 import { useUsage } from './contexts/UsageContext'
 
-function App() {
+function ChatPage() {
   const {
     messages,
     messageMetadata,
@@ -89,6 +91,16 @@ function App() {
         onMessageFeedbackSubmit={onMessageFeedbackSubmit}
       />
     </main>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<ChatPage />} />
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   )
 }
 
