@@ -3,6 +3,10 @@ import { createHash } from 'crypto';
 import { connectDB } from '../../../lib/mongodb';
 import { Chat } from '../../../models/Chat';
 
+// Disable caching for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const sha1Hash = (data: string) => {
     const hash = createHash('sha1');
     hash.update(data);

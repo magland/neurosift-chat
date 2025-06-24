@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { UsageService } from '../../../lib/usageService';
 
+// Disable caching for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const allowedModels = [
