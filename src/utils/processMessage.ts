@@ -40,10 +40,13 @@ export async function processMessage(
   model: string,
   onMessagesUpdate?: (messages: ORMessage[]) => void,
 ): Promise<{response: string, newMessages: ORMessage[], inputTokens: number, outputTokens: number}> {
+
+  const systemMessage0 = systemMessageText;
+
   const messages: ORMessage[] = [
     {
       role: "system",
-      content: systemMessageText
+      content: systemMessage0
     },
     ...messageHistory
   ];

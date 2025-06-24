@@ -17,7 +17,7 @@ export function SearchForm({
         type="text"
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}
-        placeholder="Enter your query..."
+        placeholder="Query DANDI and OpenNeuro..."
         className="search-input"
       />
       <button type="submit" className="search-button" disabled={isLoading}>

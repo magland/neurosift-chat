@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, type FormEvent } from "react";
 import MarkdownContent from "./MarkdownContent";
 import type { ORMessage } from "../completion/openRouterTypes";
@@ -47,12 +48,16 @@ export function ChatMessages({
 
   if (messages.length === 0) return null;
 
+  const toolSymbol = "🛠️";
+
   return (
     <div className="chat-container">
       {messages.map((message, index) => (
         <div key={index} className={`message ${message.role}`}>
           <MarkdownContent
-            content={(message.content || "no content") as string}
+            content={
+              message.content as string ||
+                (message.role === "assistant" && (message as any).tool_calls ? toolSymbol : "no content")}
           />
           {shouldShowFeedback(message) && onMessageFeedbackSubmit && (
             <div
@@ -122,7 +127,7 @@ export function ChatMessages({
             type="text"
             value={followUpQuery}
             onChange={(e) => onFollowUpChange(e.target.value)}
-            placeholder="Ask a follow-up question..."
+            placeholder="Follow-up query..."
             className="search-input"
           />
           <button type="submit" className="search-button">

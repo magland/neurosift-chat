@@ -3,11 +3,10 @@ import styles from './SuggestedQueries.module.css'
 
 interface SuggestedQueriesProps {
   onQuerySelect: (query: string) => void
-  selectedRepositories?: string[]
 }
 
-export function SuggestedQueries({ onQuerySelect, selectedRepositories }: SuggestedQueriesProps) {
-  const suggestedQueries = selectedRepositories?.includes("DANDI") ? SUGGESTED_QUERIES : [];
+export function SuggestedQueries({ onQuerySelect }: SuggestedQueriesProps) {
+  const suggestedQueries = SUGGESTED_QUERIES;
   return (
     <div className={styles.suggestions}>
       {/* <h2>Try asking about...</h2> */}

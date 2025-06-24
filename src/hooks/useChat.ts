@@ -28,7 +28,6 @@ export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [selectedModel, setSelectedModel] = useState(defaultModel);
-  const [selectedRepositories, setSelectedRepositories] = useState<string[]>(["DANDI"]);
   const [chatKey, setChatKey] = useState<string | null>(null);
   const [chatId, setChatId] = useState<string | null>(null);
   const [tokenUsage, setTokenUsage] = useState<{
@@ -66,7 +65,6 @@ export function useChat() {
             timestamp: Date.now(),
             feedback: null
           })));
-          setSelectedRepositories(chatData.selectedRepositories || ["DANDI"]);
         } catch (error) {
           console.error('Failed to load chat:', error);
         }
@@ -92,7 +90,6 @@ export function useChat() {
             completionTokens: tokenUsage.outputTokens,
             estimatedCost: tokenUsage.cost,
             messageMetadata,
-            selectedRepositories
           });
         } catch (error) {
           console.error('Failed to save chat:', error);
@@ -101,7 +98,7 @@ export function useChat() {
     };
 
     saveCurrentChat();
-  }, [messages, chatId, chatKey, tokenUsage, selectedModel, messageMetadata, selectedRepositories]);
+  }, [messages, chatId, chatKey, tokenUsage, selectedModel, messageMetadata]);
 
   useEffect(() => {
     console.info(
@@ -131,9 +128,7 @@ export function useChat() {
     setIsLoading(true);
     setFollowUpQuery("");
     setStatus(
-      `Searching ${selectedRepositories.join(", ")} ${
-        selectedRepositories.length > 1 ? "repositories" : "repository"
-      }...`
+      `Processing query...`
     );
 
     try {
@@ -245,8 +240,6 @@ export function useChat() {
     status,
     selectedModel,
     setSelectedModel,
-    selectedRepositories,
-    setSelectedRepositories,
     chatId,
     chatKey,
     onMessageFeedbackSubmit: chatId ? handleMessageFeedbackSubmit : undefined,

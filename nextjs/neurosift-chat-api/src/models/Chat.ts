@@ -12,8 +12,7 @@ const chatSchema = new mongoose.Schema({
   }],
   messages: { type: [mongoose.Schema.Types.Mixed], required: false },
   timestampCreated: { type: Number, required: true },
-  timestampUpdated: { type: Number, required: true },
-  selectedRepositories: { type: [String], default: [] }
+  timestampUpdated: { type: Number, required: true }
 });
 
 export const Chat = mongoose.models.Chat || mongoose.model('Chat', chatSchema);

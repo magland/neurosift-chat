@@ -59,7 +59,6 @@ interface SaveChatOptions {
     timestamp: number;
     feedback?: 'up' | 'down' | null;
   }[];
-  selectedRepositories?: string[];
 }
 
 export const saveChat = async (options: SaveChatOptions) => {
@@ -78,7 +77,6 @@ export const saveChat = async (options: SaveChatOptions) => {
         messages: options.messages,
         timestampCreated: Date.now(),
         timestampUpdated: Date.now(),
-        selectedRepositories: options.selectedRepositories || []
       },
       chatKey: options.chatKey,
       size: new Blob([JSON.stringify(options.messages)]).size,
