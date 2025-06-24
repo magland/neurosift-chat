@@ -1,7 +1,7 @@
 export const SUGGESTED_QUERIES = [
+  "What can you help with?",
   "How many dandisets are published?",
   "How many OpenNeuro datasets have fewer than 10 files?",
-  "Find published dandisets with fewer than 5 NWB files",
   "Find starred dandisets with Units and ElectricalSeries data",
   "What are all the genotypes in DANDI?",
   "What are all the species in DANDI?",
