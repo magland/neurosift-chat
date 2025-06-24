@@ -225,6 +225,9 @@ So for example, to get the size of the dataset you would use dataset.snapshot.si
 
 The possible values in snapshot.modalities include: ieeg, meg, mri, nirs, pet, and some others
 
+When you display an OpenNeuro dataset to the user, you should provide a link to the dataset in OpenNeuro via:
+
+- [dataset_id](https://openneuro.org/datasets/dataset_id/versions/snapshot.tag) name of dataset
 
 # OpenNeuro dataset by ID
 
