@@ -120,6 +120,17 @@ Each neurodata object will have the following fields:
 - o.neurodataType: The type of the neurodata object (e.g., "ProcessingModule", "Epochs", "Units").
 - o.description: A description of the neurodata object.
 
+If the neurodata object is a table (for example Units, Epochs), it will also have:
+- o.colnames: An array of column names in the table.
+
+If the neurodata type is a time series (e.g., ElectricalSeries), it will also have:
+- o.start_time: The start time of the time series.
+- o.duration: The duration of the time series.
+- o.sampling_rate: The sampling rate of the time series (Hz)
+- o.shape: The shape of the data array (e.g., [1000, 16] for 1000 samples of 16 channels).
+
+Otherwise, these fields will be undefined.
+
 # Limiting output
 
 Your script should not output a huge amount of text, but should summarize the results in a concise manner appropriate to the conversation.
