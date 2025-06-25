@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { processMessage } from "../utils/processMessage";
@@ -42,9 +42,11 @@ export function useChat() {
     outputTokens: 0,
     cost: 0,
   });
+  const [isDirty, setIsDirty] = useState(false);
 
   const { refreshUsage } = useUsage();
   const initialized = useRef(false);
+  const isSaving = useRef(false);
 
   // Initialize chat when component mounts
   useEffect(() => {
@@ -81,30 +83,36 @@ export function useChat() {
     initializeChat();
   }, [selectedModel, searchParams]);
 
-  // Save chat when messages update
-  useEffect(() => {
-    const saveCurrentChat = async () => {
-      if (messages.length > 0 && chatId && chatKey) {
-        try {
-          const userName = getUserName();
-          await saveChat({
-            messages,
-            chatId,
-            chatKey,
-            promptTokens: tokenUsage.inputTokens,
-            completionTokens: tokenUsage.outputTokens,
-            estimatedCost: tokenUsage.cost,
-            messageMetadata,
-            userName: userName || undefined,
-          });
-        } catch (error) {
-          console.error('Failed to save chat:', error);
-        }
+  const saveCurrentChat = useCallback(async () => {
+    if (messages.length > 0 && chatId && chatKey && !isSaving.current) {
+      isSaving.current = true;
+      try {
+        const userName = getUserName();
+        await saveChat({
+          messages,
+          chatId,
+          chatKey,
+          promptTokens: tokenUsage.inputTokens,
+          completionTokens: tokenUsage.outputTokens,
+          estimatedCost: tokenUsage.cost,
+          messageMetadata,
+          userName: userName || undefined,
+        });
+        setIsDirty(false);
+      } catch (error) {
+        console.error('Failed to save chat:', error);
+      } finally {
+        isSaving.current = false;
       }
-    };
+    }
+  }, [messages, chatId, chatKey, tokenUsage, messageMetadata]);
 
-    saveCurrentChat();
-  }, [messages, chatId, chatKey, tokenUsage, selectedModel, messageMetadata]);
+  // Auto-save when chat becomes dirty
+  useEffect(() => {
+    if (isDirty && messages.length > 0 && chatId && chatKey) {
+      saveCurrentChat();
+    }
+  }, [isDirty, saveCurrentChat, messages.length, chatId, chatKey]);
 
   useEffect(() => {
     console.info(
@@ -175,6 +183,9 @@ export function useChat() {
       ]);
       setMainQuery("");
 
+      // Mark chat as dirty to trigger auto-save
+      setIsDirty(true);
+
       // Refresh usage data after successful completion
       refreshUsage();
     } finally {
@@ -199,6 +210,8 @@ export function useChat() {
       }
       return updated;
     });
+    // Mark chat as dirty to trigger auto-save
+    setIsDirty(true);
   };
 
   const handleFollowUp = async (e: FormEvent) => {
@@ -230,6 +243,9 @@ export function useChat() {
       }));
       setMessages(newMessages);
       setFollowUpQuery("");
+
+      // Mark chat as dirty to trigger auto-save
+      setIsDirty(true);
     } finally {
       setStatus("");
       setIsLoading(false);
@@ -251,6 +267,6 @@ export function useChat() {
     setSelectedModel,
     chatId,
     chatKey,
-    onMessageFeedbackSubmit: chatId ? handleMessageFeedbackSubmit : undefined,
+    onMessageFeedbackSubmit: chatId ? handleMessageFeedbackSubmit : undefined
   };
 }

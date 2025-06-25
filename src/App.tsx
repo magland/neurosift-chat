@@ -24,7 +24,7 @@ function ChatPage() {
     selectedModel,
     setSelectedModel,
     chatKey,
-    onMessageFeedbackSubmit
+    onMessageFeedbackSubmit,
   } = useChat()
 
   const { isModelAvailable } = useUsage()
