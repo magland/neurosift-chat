@@ -71,6 +71,10 @@ export function useChat() {
             timestamp: Date.now(),
             feedback: null
           })));
+          const modelOfChat = determineModelOfChat(chatData);
+          if (modelOfChat) {
+            setSelectedModel(modelOfChat);
+          }
         } catch (error) {
           console.error('Failed to load chat:', error);
         }
@@ -270,3 +274,15 @@ export function useChat() {
     onMessageFeedbackSubmit: chatId ? handleMessageFeedbackSubmit : undefined
   };
 }
+
+const determineModelOfChat = (chatData: { messages: ORMessage[]; messageMetadata?: { model: string }[] }) => {
+  if (chatData.messageMetadata && chatData.messageMetadata.length > 0) {
+    for (let i = chatData.messageMetadata.length - 1; i >= 0; i--) {
+      const meta = chatData.messageMetadata[i];
+      if (meta && meta.model) {
+        return meta.model;
+      }
+    }
+  }
+  return undefined;
+};
