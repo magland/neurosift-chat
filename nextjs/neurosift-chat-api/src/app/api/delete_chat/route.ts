@@ -26,17 +26,16 @@ export async function DELETE(
             return NextResponse.json({ error: 'Chat ID is required' }, { status: 400 });
         }
 
-        if (!chatKey) {
-            return NextResponse.json({ error: 'Chat key is required' }, { status: 400 });
+        if (!passcode || passcode !== process.env.ADMIN_PASSCODE) {
+            return NextResponse.json({ error: 'Invalid admin passcode' }, { status: 401 });
         }
 
-        const chatKeyHash = await sha1Hash(chatKey);
-        if (chatKeyHash !== chatId) {
-            return NextResponse.json({ error: 'Invalid chat key' }, { status: 401 });
-        }
-
-        if (!passcode || passcode !== process.env.CHAT_PASSCODE) {
-            return NextResponse.json({ error: 'Invalid passcode' }, { status: 401 });
+        // If chat key is provided, validate it (for backward compatibility)
+        if (chatKey) {
+            const chatKeyHash = await sha1Hash(chatKey);
+            if (chatKeyHash !== chatId) {
+                return NextResponse.json({ error: 'Invalid chat key' }, { status: 401 });
+            }
         }
 
         // Check if chat is finalized before deleting

@@ -25,7 +25,6 @@ export const useChats = () => {
     setIsLoading(true)
     setError(null)
     try {
-      console.log('--- fetching chats ---')
       const response = await fetch(`https://neurosift-chat-api.vercel.app/api/list_chats?passcode=${chatPasscode}`)
       if (!response.ok) {
         if (response.status === 401) {
@@ -45,7 +44,7 @@ export const useChats = () => {
 
   const countFeedback = (metadata: ChatData['messageMetadata'], type: 'up' | 'down') => {
     try {
-      return metadata.filter(m => m.feedback === type).length
+      return metadata.filter(m => m && (m.feedback === type)).length
     }
     catch (err) {
       console.warn('Failed to count feedback:', err);
@@ -63,7 +62,7 @@ export const useChats = () => {
 
   const getModelsUsed = (metadata: ChatData['messageMetadata']) => {
     try {
-      const uniqueModels = new Set(metadata.map(m => m.model).map(m => m.split("/").pop() || m));
+      const uniqueModels = new Set(metadata.map(m => m && m.model).map(m => m && m.split("/").pop() || m));
       return Array.from(uniqueModels).join(', ')
     }
     catch (err) {
@@ -80,11 +79,35 @@ export const useChats = () => {
     return messages.length
   }
 
+  const deleteChat = useCallback(async (chatId: string, adminPasscode: string) => {
+    try {
+      const url = new URL('https://neurosift-chat-api.vercel.app/api/delete_chat');
+      url.searchParams.set('chatId', chatId);
+      url.searchParams.set('passcode', adminPasscode);
+
+      const response = await fetch(url.toString(), {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete chat');
+      }
+
+      // Remove the chat from local state
+      setChats(prevChats => prevChats.filter(chat => chat.chatId !== chatId));
+      return true;
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Failed to delete chat');
+    }
+  }, []);
+
   return {
     chats,
     isLoading,
     error,
     loadChats,
+    deleteChat,
     countFeedback,
     formatDate,
     getFirstUserMessage,
