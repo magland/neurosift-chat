@@ -45,6 +45,7 @@ export const AdminPage: React.FC = () => {
           <thead>
             <tr>
               <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>Timestamp</th>
+              <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>User</th>
               <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>First Message</th>
               <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>Models</th>
               <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #dee2e6' }}>Messages</th>
@@ -72,6 +73,9 @@ export const AdminPage: React.FC = () => {
                 >
                   <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
                     {formatDate(chat.timestampCreated)}
+                  </td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6', color: chat.userName ? '#333' : '#999', fontStyle: chat.userName ? 'normal' : 'italic' }}>
+                    {chat.userName || 'Anonymous'}
                   </td>
                   <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
                     {getFirstUserMessage(chat.messages)}

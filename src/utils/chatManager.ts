@@ -59,6 +59,7 @@ interface SaveChatOptions {
     timestamp: number;
     feedback?: 'up' | 'down' | null;
   }[];
+  userName?: string;
 }
 
 export const saveChat = async (options: SaveChatOptions) => {
@@ -70,6 +71,7 @@ export const saveChat = async (options: SaveChatOptions) => {
     body: JSON.stringify({
       chat: {
         chatId: options.chatId,
+        userName: options.userName,
         promptTokens: options.promptTokens,
         completionTokens: options.completionTokens,
         estimatedCost: options.estimatedCost,

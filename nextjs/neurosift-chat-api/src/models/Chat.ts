@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const chatSchema = new mongoose.Schema({
   chatId: { type: String, required: true, unique: true },
+  userName: { type: String, required: false },
   promptTokens: { type: Number, required: true },
   completionTokens: { type: Number, required: true },
   estimatedCost: { type: Number, required: true },

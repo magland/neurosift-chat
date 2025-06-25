@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 
 export interface ChatData {
   chatId: string
+  userName?: string
   messages: { role: string; content: string }[]
   messageMetadata: {
     model: string

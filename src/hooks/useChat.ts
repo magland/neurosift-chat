@@ -12,6 +12,7 @@ import {
   saveChat,
   loadChat
 } from "../utils/chatManager";
+import { getUserName } from "../utils/userNameManager";
 import { useUsage } from "../contexts/UsageContext";
 
 const defaultModel = "openai/gpt-4.1-mini";
@@ -84,6 +85,7 @@ export function useChat() {
     const saveCurrentChat = async () => {
       if (messages.length > 0 && chatId && chatKey) {
         try {
+          const userName = getUserName();
           await saveChat({
             messages,
             chatId,
@@ -92,6 +94,7 @@ export function useChat() {
             completionTokens: tokenUsage.outputTokens,
             estimatedCost: tokenUsage.cost,
             messageMetadata,
+            userName: userName || undefined,
           });
         } catch (error) {
           console.error('Failed to save chat:', error);

@@ -4,6 +4,7 @@ import { ChatMessages } from './components/ChatMessages'
 import { SearchForm } from './components/SearchForm'
 import { SuggestedQueries } from './components/SuggestedQueries'
 import { ModelSelect } from './components/ModelSelect'
+import { UserNameInput } from './components/UserNameInput'
 import { AdminPage } from './components/AdminPage'
 import { useChat } from './hooks/useChat'
 import { useUsage } from './contexts/UsageContext'
@@ -48,6 +49,7 @@ function ChatPage() {
       </div>
       {(!messages.length || chatKey) && (
         <div className="search-container">
+        <UserNameInput />
         <ModelSelect
           selectedModel={selectedModel}
           onModelChange={setSelectedModel}
