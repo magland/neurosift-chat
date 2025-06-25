@@ -3,6 +3,66 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs as highlightStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {
+  Chart as ChartJS,
+  BarElement,
+  LineElement,
+  PointElement,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  type ChartType,
+  type ChartOptions,
+  LogarithmicScale,
+  TimeScale,
+  RadialLinearScale,
+  BarController,
+  LineController,
+  PieController,
+  DoughnutController,
+  RadarController,
+  BubbleController,
+  ScatterController,
+  PolarAreaController,
+  Filler,
+  SubTitle,
+} from "chart.js";
+import { Chart } from "react-chartjs-2";
+
+ChartJS.register(
+  // Elements
+  BarElement,
+  LineElement,
+  PointElement,
+  ArcElement,
+
+  // Scales
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  TimeScale,
+  RadialLinearScale,
+
+  // Controllers
+  BarController,
+  LineController,
+  PieController,
+  DoughnutController,
+  RadarController,
+  BubbleController,
+  ScatterController,
+  PolarAreaController,
+
+  // Plugins
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+  SubTitle // optional
+);
 
 interface MarkdownContentProps {
   content: string;
@@ -50,6 +110,26 @@ const MarkdownContent: FunctionComponent<MarkdownContentProps> = ({
           const { children, className, ...rest } = props;
           const match = /language-(\w+)/.exec(className || "");
           const code = String(children).replace(/\n$/, "");
+          const language = (className || "").replace("language-", "");
+
+          // Handle `chart` blocks
+          if (language === "chart") {
+            try {
+              const config = JSON.parse(code);
+              const { type, data, options } = config;
+              return (
+                <div style={{ maxWidth: "600px", margin: "1em 0" }}>
+                  <Chart type={type as ChartType} data={data} options={options as ChartOptions} />
+                </div>
+              );
+            } catch (e) {
+              return (
+                <pre style={{ color: "red" }}>
+                  Invalid chart configuration: {e instanceof Error ? e.message : String(e)}
+                </pre>
+              );
+            }
+          }
 
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const [copied, setCopied] = useState(false);
