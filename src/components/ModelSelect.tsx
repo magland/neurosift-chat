@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useUsage } from '../contexts/UsageContext';
 
 const AVAILABLE_MODELS = [
@@ -25,6 +26,7 @@ export function ModelSelect({
   onModelChange,
 }: ModelSelectProps) {
   const { isModelAvailable, getModelStatus } = useUsage();
+  const [showAmounts, setShowAmounts] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -39,7 +41,12 @@ export function ModelSelect({
     <div style={{ marginBottom: '20px' }}>
       <div style={{ marginBottom: '10px' }}>
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-          <span style={{fontWeight: "bold"}}>Select a model:</span>
+          <span
+            style={{fontWeight: "bold", cursor: 'default'}}
+            onClick={() => setShowAmounts(!showAmounts)}
+          >
+            Select a model:
+          </span>
           {AVAILABLE_MODELS.map((model) => {
             const available = isModelAvailable(model.model);
             const status = getModelStatus(model.model);
@@ -57,7 +64,7 @@ export function ModelSelect({
                   />
                   {model.label}
                 </label>
-                {status && (
+                {status && showAmounts && (
                   <small style={{
                     fontSize: '11px',
                     color: available ? '#666' : '#d32f2f',
