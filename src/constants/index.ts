@@ -8,5 +8,6 @@ export const SUGGESTED_QUERIES = [
   "Show published dandisets larger than 100GB",
   "Find dandisets that contain both male and female subjects",
   "Break down OpenNeuro datasets by modality",
-  "I'm looking for human data involving a writing task"
+  "I'm looking for human data involving a writing task",
+  "Show a histogram of sampling rates for ElectricalSeries objects in DANDI."
 ]

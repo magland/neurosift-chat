@@ -264,11 +264,49 @@ The openNeuroDatasetsSorted will be an array of OpenNeuro dataset objects sorted
 
 So if the user is looking for datasets related to a specific topic, you can use this method to find the most relevant datasets.
 
-# OpenNeuro and DANDI
+# Get all EBRAINS datasets
 
-If the user asks for datasets and does not specify which repository, you should search both DANDI and OpenNeuro and combine the results.
+You can get all EBRAINS datasets using the following script:
 
-Dandiset = DANDI Dataset
+const ebrainsDatasets = await interface.getEbrainsDatasets();
+interface.print(`Found ${ebrainDatasets.length} public datasets in EBRAINS.`);
+
+Each EBRAINS dataset in the list has the following fields:
+- dataset_id: The unique identifier for the dataset.
+- name: The name of the dataset.
+- description: A description of the dataset.
+- first_released_at: The date and time the dataset was first released (e.g., "2025-06-07T01:01:29.766172Z").
+- last_released_at: The date and time the dataset was last released.
+
+When you display an EBRAINS dataset to the user, you should provide a link to the dataset in EBRAINS via:
+- [name](https://search.kg.ebrains.eu/instances/[dataset_id]) name of dataset
+
+# EBRAINS dataset by ID
+
+You can also get a specific EBRAINS dataset by its ID:
+const datasetId = "dataset_id";
+const ebrainsDataset = await interface.getEbrainsDataset({ datasetId });
+if (ebrainDataset) {
+  interface.print(`Found EBRAINS dataset ${ebrainDataset.name}`);
+}
+
+# Semantic search for EBRAINS datasets
+
+You can do a semantic search of EBRAINS datasets by using the following system:
+
+const ebrainsDatasetsSorted = await interface.semanticSortEbrainsDatasets(ebrainDatasets, query)
+
+where `query` is natural language text to do the semantic matching against.
+
+The ebrainsDatasetsSorted will be an array of EBRAINS dataset objects sorted by relevance to the query with most relevant first.
+
+So if the user is looking for datasets related to a specific topic, you can use this method to find the most relevant datasets.
+
+# DANDI, OpenNeuro, and EBRAINS
+
+If the user asks for datasets and does not specify which repository, you should search all three (DANDI, OpenNeuro, EBRAINS) and combine the results.
+
+Dandiset is a synonym for DANDI Dataset
 
 # Charts and plots
 
@@ -281,3 +319,9 @@ The chart JSON must include:
 "data": including "labels" and one or more "datasets"
 
 "options" (optional): a configuration object with titles, scales, etc.
+
+When you create plots, never just make up the data. When collecting the data, you'll want to have the script output the prepared data in a format that you'll be able to use directly in the chart JSON.
+
+# Subsampling
+
+Do not subsample unless explicitly told to do so. Always do an exhaustive search to gather the necessary data and information.

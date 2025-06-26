@@ -19,7 +19,7 @@ export function SearchForm({
         type="text"
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}
-        placeholder="Query DANDI and OpenNeuro..."
+        placeholder="Query DANDI, OpenNeuro, and EBRAINS..."
         className="search-input"
         disabled={disabled}
       />
