@@ -42,9 +42,12 @@ function ChatPage() {
         <p style={{margin: 0}}>
           * This application is experimental and in early development.
           <br />
-          * All chats are saved and may be visible to others.
+          * All chats are saved and may be visible to others. We are collecting data to improve the service.
+          <br />
+          * Use it for free, but please be considerate of the shared resources.
           <br />
           * All users share a single quota, which resets every day. GPT-4.1 Mini is the most cost-effective, while Claude Sonnet 4 is the most advanced.
+          <br />
         </p>
       </div>
       {(!messages.length || chatKey) && (
