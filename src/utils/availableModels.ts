@@ -40,6 +40,14 @@ export const AVAILABLE_MODELS = [
       },
     },
     {
+      model: "moonshotai/kimi-k2",
+      label: "kimi-k2",
+      cost: {
+        prompt: 1,
+        completion: 3,
+      },
+    },
+    {
       model: "openai/gpt-4o",
       label: "gpt-4o",
       cost: {

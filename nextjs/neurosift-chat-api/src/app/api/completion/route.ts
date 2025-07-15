@@ -10,7 +10,8 @@ const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const allowedModels = [
   "openai/gpt-4.1-mini",
   "openai/gpt-4.1",
-  "anthropic/claude-sonnet-4"
+  "anthropic/claude-sonnet-4",
+  "moonshotai/kimi-k2"
 ]
 
 // Model costs per million tokens (prompt, completion)
@@ -18,6 +19,7 @@ const MODEL_COSTS = {
   'anthropic/claude-sonnet-4': { prompt: 3, completion: 15 },
   'openai/gpt-4.1': { prompt: 2, completion: 8 },
   'openai/gpt-4.1-mini': { prompt: 0.4, completion: 1.6 },
+  'moonshotai/kimi-k2': { prompt: 1, completion: 3}
 } as const;
 
 export async function POST(request: Request) {

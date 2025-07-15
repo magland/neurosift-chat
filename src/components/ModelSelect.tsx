@@ -13,6 +13,10 @@ const AVAILABLE_MODELS = [
   {
     model: "anthropic/claude-sonnet-4",
     label: "Claude Sonnet 4"
+  },
+  {
+    model: "moonshotai/kimi-k2",
+    label: "Kimi K2"
   }
 ] as const
 

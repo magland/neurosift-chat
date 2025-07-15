@@ -3,9 +3,10 @@ import { DailyUsage } from '../models/DailyUsage';
 
 // Daily limits for each model (in USD)
 const DAILY_LIMITS = {
-  'anthropic/claude-sonnet-4': 5,
-  'openai/gpt-4.1': 5.00,
-  'openai/gpt-4.1-mini': 5.00,
+  'anthropic/claude-sonnet-4': 100,
+  'openai/gpt-4.1': 100.00,
+  'openai/gpt-4.1-mini': 100.00,
+  'moonshotai/kimi-k2': 100
 } as const;
 
 type ModelName = keyof typeof DAILY_LIMITS;
