@@ -108,6 +108,7 @@ The NWB files will have the following fields:
 - f.subject.subject_id: The subject ID in the NWB file.
 - f.subject.strain: The strain of the subject in the NWB file (if available).
 - f.subject.specimen_name: The specimen name of the subject in the NWB file (if available).
+- f.subject.description: A description of the subject in the NWB file (if available).
 
 You can use the asset ID to make a link to the NWB file on neurosift via:
 [path](https://neurosift.app/nwb?url=https://api.dandiarchive.org/api/assets/[asset_id]/download/&dandisetId=[dandiset_id]&dandisetVersion=[dandiset_version])
