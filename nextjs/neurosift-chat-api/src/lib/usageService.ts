@@ -6,7 +6,8 @@ const DAILY_LIMITS = {
   'anthropic/claude-sonnet-4': 100,
   'openai/gpt-4.1': 100.00,
   'openai/gpt-4.1-mini': 100.00,
-  'moonshotai/kimi-k2': 100
+  'moonshotai/kimi-k2': 100,
+  'deepseek/deepseek-v4-pro': 100
 } as const;
 
 type ModelName = keyof typeof DAILY_LIMITS;

@@ -11,7 +11,8 @@ const allowedModels = [
   "openai/gpt-4.1-mini",
   "openai/gpt-4.1",
   "anthropic/claude-sonnet-4",
-  "moonshotai/kimi-k2"
+  "moonshotai/kimi-k2",
+  "deepseek/deepseek-v4-pro"
 ]
 
 // Model costs per million tokens (prompt, completion)
@@ -19,7 +20,8 @@ const MODEL_COSTS = {
   'anthropic/claude-sonnet-4': { prompt: 3, completion: 15 },
   'openai/gpt-4.1': { prompt: 2, completion: 8 },
   'openai/gpt-4.1-mini': { prompt: 0.4, completion: 1.6 },
-  'moonshotai/kimi-k2': { prompt: 1, completion: 3}
+  'moonshotai/kimi-k2': { prompt: 1, completion: 3},
+  'deepseek/deepseek-v4-pro': { prompt: 0.435, completion: 0.87 }
 } as const;
 
 export async function POST(request: Request) {

@@ -16,7 +16,7 @@ import { getUserName } from "../utils/userNameManager";
 import { useUsage } from "../contexts/UsageContext";
 
 // const defaultModel = "openai/gpt-4.1-mini";
-const defaultModel = "anthropic/claude-sonnet-4";
+const defaultModel = "deepseek/deepseek-v4-pro";
 
 export function useChat() {
   const [searchParams, setSearchParams] = useSearchParams();

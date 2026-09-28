@@ -17,6 +17,10 @@ const AVAILABLE_MODELS = [
   {
     model: "moonshotai/kimi-k2",
     label: "Kimi K2"
+  },
+  {
+    model: "deepseek/deepseek-v4-pro",
+    label: "DeepSeek V4 Pro"
   }
 ] as const
 

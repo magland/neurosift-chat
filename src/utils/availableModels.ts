@@ -86,5 +86,13 @@ export const AVAILABLE_MODELS = [
         prompt: 0.5,
         completion: 2.18
       }
+    },
+    {
+      model: "deepseek/deepseek-v4-pro",
+      label: "deepseek-v4-pro",
+      cost: {
+        prompt: 0.435,
+        completion: 0.87
+      }
     }
   ];
